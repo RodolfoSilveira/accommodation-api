@@ -16,19 +16,19 @@ export const ImmobileType = new GraphQLObjectType({
       type: GraphQLInt,
     },
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     price: {
-      type: GraphQLFloat,
+      type: new GraphQLNonNull(GraphQLFloat),
     },
     place: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     description: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     owner: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
   }),
 });
