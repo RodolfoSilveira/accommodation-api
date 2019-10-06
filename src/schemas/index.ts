@@ -29,6 +29,9 @@ const Schemas = new GraphQLSchema({
             type: new GraphQLNonNull(GraphQLInt),
           },
         },
+        resolve(parentValue, args) {
+          return immobileController.show(args);
+        },
       },
       photos: {
         type: new GraphQLList(PhotoType),
