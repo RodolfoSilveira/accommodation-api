@@ -3,12 +3,13 @@ import {
   GraphQLNonNull,
   GraphQLList,
   GraphQLSchema,
+  GraphQLFloat,
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
 } from 'graphql';
 
-const ImmobileType = new GraphQLObjectType({
+export const ImmobileType = new GraphQLObjectType({
   name: 'Immobile',
   fields: (): any => ({
     id: {
@@ -16,6 +17,9 @@ const ImmobileType = new GraphQLObjectType({
     },
     name: {
       type: GraphQLString,
+    },
+    price: {
+      type: GraphQLFloat,
     },
     place: {
       type: GraphQLString,
@@ -26,10 +30,26 @@ const ImmobileType = new GraphQLObjectType({
     owner: {
       type: GraphQLString,
     },
-    imagemId: {
-      type: GraphQLInt,
-    },
   }),
 });
 
-export default ImmobileType;
+export const ImmobileInputType = new GraphQLInputObjectType({
+  name: 'ImmobileInput',
+  fields: (): any => ({
+    name: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    price: {
+      type: new GraphQLNonNull(GraphQLFloat),
+    },
+    place: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    description: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    owner: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+  }),
+});

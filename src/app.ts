@@ -14,7 +14,7 @@ class App {
   }
 
   private middlewares(): void {
-    this.express.use('/graphql', graphqlHTTP({schema, graphiql: true}));
+    this.express.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(bodyParser.json());
     this.express.use(cors());
