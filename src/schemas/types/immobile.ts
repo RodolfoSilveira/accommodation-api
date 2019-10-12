@@ -9,6 +9,9 @@ import {
   GraphQLInt,
 } from 'graphql';
 
+import { PhotoType } from './photo'
+import photoController from '../../controller/photoController'
+
 export const ImmobileType = new GraphQLObjectType({
   name: 'Immobile',
   fields: (): any => ({
@@ -29,6 +32,12 @@ export const ImmobileType = new GraphQLObjectType({
     },
     owner: {
       type: new GraphQLNonNull(GraphQLString),
+    },
+    photos: {
+      type: new GraphQLList(PhotoType),
+      resolve(parentValue) {
+        return photoController.find(parentValue.id);
+      },
     },
   }),
 });

@@ -9,8 +9,9 @@ import {
   GraphQLFloat,
 } from 'graphql';
 import { ImmobileType, ImmobileInputType } from './types/immobile';
-import PhotoType from './types/photo';
+import { PhotoType, PhotoInputType } from './types/photo';
 import immobileController from '../controller/immobileController';
+import photoController from '../controller/photoController';
 
 const Schemas = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -35,6 +36,9 @@ const Schemas = new GraphQLSchema({
       },
       photos: {
         type: new GraphQLList(PhotoType),
+        resolve() {
+          return photoController.index();
+        },
       },
       photo: {
         type: PhotoType,
@@ -42,6 +46,9 @@ const Schemas = new GraphQLSchema({
           id: {
             type: new GraphQLNonNull(GraphQLInt),
           },
+        },
+        resolve(parentValue, args) {
+          return photoController.show(args);
         },
       },
     },
@@ -83,6 +90,42 @@ const Schemas = new GraphQLSchema({
         },
         resolve(parentValue, { id }) {
           return immobileController.delete(id);
+        },
+      },
+      addPhoto: {
+        type: PhotoType,
+        args: {
+          input: {
+            type: new GraphQLNonNull(PhotoInputType),
+          },
+        },
+        resolve(parentValue, { input }) {
+          return photoController.store(input);
+        },
+      },
+      updatePhoto: {
+        type: PhotoType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLInt),
+          },
+          input: {
+            type: new GraphQLNonNull(PhotoInputType),
+          },
+        },
+        resolve(parentValue, { id, input }) {
+          return photoController.update(id, input);
+        },
+      },
+      destroyPhoto: {
+        type: PhotoType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLInt),
+          },
+        },
+        resolve(parentValue, { id }) {
+          return photoController.delete(id);
         },
       },
     },

@@ -9,7 +9,25 @@ import {
   GraphQLInt,
 } from 'graphql';
 
-const PhotoType = new GraphQLObjectType({
+import { ImmobileType } from './immobile'
+import immobileController from '../../controller/immobileController'
+
+export const PhotoInputType = new GraphQLInputObjectType({
+  name: 'PhotoInput',
+  fields: (): any => ({
+    id: {
+      type: GraphQLInt,
+    },
+    path: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    immobileId: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  }),
+});
+
+export const PhotoType = new GraphQLObjectType({
   name: 'Photo',
   fields: (): any => ({
     id: {
@@ -19,9 +37,13 @@ const PhotoType = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLString),
     },
     immobileId: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+    immobile: {
+      type: ImmobileType,
+      resolve(parentValue) {
+        return immobileController.find(parentValue.immobileId);
+      },
     },
   }),
 });
-
-export default PhotoType;

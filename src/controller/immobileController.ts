@@ -7,6 +7,10 @@ class ImmobileController {
     return this.db('immobiles').then((immobile) => immobile);
   }
 
+  public find(id): Promise<any> {
+    return this.db('immobiles').where('id', id).first();
+  }
+
   public show(args): any {
     return this.db('immobiles').where('id', args.id).first();
   }
