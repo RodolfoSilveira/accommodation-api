@@ -60,6 +60,31 @@ const Schemas = new GraphQLSchema({
           return immobileController.store(input);
         },
       },
+      updateImmobile: {
+        type: ImmobileType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLInt),
+          },
+          input: {
+            type: new GraphQLNonNull(ImmobileInputType),
+          },
+        },
+        resolve(parentValue, { id, input }) {
+          return immobileController.update(id, input);
+        },
+      },
+      destroyImmobile: {
+        type: ImmobileType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLInt),
+          },
+        },
+        resolve(parentValue, { id }) {
+          return immobileController.delete(id);
+        },
+      },
     },
   }),
 });
